@@ -1,0 +1,465 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0044)https://automatetheboringstuff.com/chapter0/ -->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" type="text/css" href="automate_website.css">
+  
+  <title>Automatiser de kedelige ting med Python</title>
+</head>
+
+<body>
+  <div class="top_header">
+  <a href="https://automatetheboringstuff.com/">Home</a> | <a href="https://www.nostarch.com/automatestuff">Buy on No Starch Press</a> | <a href="http://www.amazon.com/gp/product/1593275994/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1593275994&amp;linkCode=as2&amp;tag=playwithpyth-20&amp;linkId=HDM7V3T6RHC5VVN4">Buy on Amazon</a> | <a href="https://twitter.com/AlSweigart">@AlSweigart</a> | <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7----- "><input type="image" src="./pictures/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"><img alt="" border="0" src="./pictures/pixel.gif" width="1" height="1" hidden="" style="display: none !important;">
+          </form></div>
+
+  <div class="main">
+	
+				
+<article id="post-43" class="post-43 page type-page status-publish hentry">
+	<header class="entry-header">
+		<h1 class="entry-title">Kapitel  0 – Introduction</h1>	</header>
+<div class="calibre" id="calibre_link-90">
+<div class="book" title="Introduction">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h1 class="title1"><a id="calibre_link-1926" class="firstname"></a>Introduction</h1>
+</div>
+</div>
+</div>
+<p class = "calibre4"> "Du har lige gjort i to timer, hvad det kræver de tre af os to dage at gøre." Min kollegie værelseskammerat arbejdede i en detailbutik i begyndelsen af ​​2000'erne. Lejligheden vil lejlighedsvis modtage et regneark på tusindvis af produktpriser fra sin konkurrent. Et hold på tre medarbejdere ville udskrive regnearket på en tyk stak papir og opdele det indbyrdes. For hver produktpris ville de se op på deres butiks pris og notere alle de produkter, som deres konkurrenter solgte til mindre. Det tog normalt et par dage. </p>
+<p class = "calibre4"> "Du ved, jeg kunne skrive et program til at gøre det, hvis du har den originale fil til udskrifterne", sagde min værelseskammerat dem, da han så dem sidder på gulvet med papirer spredt og stablet rundt dem. </p>
+<p class = "calibre4"> Efter et par timer havde han et kort program, der læste en konkurrents pris fra en fil, fandt produktet i butiksdatabasen og noterede sig, om konkurrenten var billigere. Han var stadig ny til programmering, og han tilbragte det meste af sin tid på at se dokumentation i en programmeringsbog. Det faktiske program tog kun få sekunder at køre. Min værelseskammerat og hans kolleger tog en ekstra lang frokost den dag. </p>
+<p class = "calibre4"> Dette er strømmen til computerprogrammering. En computer er som en schweizisk hærkniv, som du kan konfigurere til utallige opgaver. Mange mennesker bruger timer til at klikke og skrive for at udføre gentagne opgaver, uvidende om, at den maskine, de bruger, kunne gøre deres arbejde i sekunder, hvis de gav det de rigtige instruktioner. </p>
+<div class="book" title="Whom Is This Book For?">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<div class="calibre6"></div>
+<h1 class="title2"><a id="calibre_link-1927" class="firstname"></a>Hvem er denne bog til?</h1>
+</div>
+</div>
+</div>
+<p class = "calibre4"> Software er kernen i så mange af de værktøjer, vi bruger i dag: Næsten alle bruger sociale netværk til at kommunikere, mange mennesker har internetforbundne computere i deres telefoner, og de fleste kontorjobs involverer interagerer med en computer for at få arbejdet færdigt. Som følge heraf er efterspørgslen efter folk, der kan kode, skubbet. Utallige bøger, interaktive web-tutorials og udvikler boot camps lover at gøre ambitiøse nybegyndere til software ingeniører med sekscifret lønninger. </p>
+<p class = "calibre4"> Denne bog er ikke til disse personer. Det er for alle andre. </p>
+<p class = "calibre4"> På egen hånd vil denne bog ikke vise dig til en professionel softwareudvikler mere end et par guitarundervisning vil gøre dig til en rockestjerne. Men hvis du er en kontorist, administrator, akademiker eller nogen anden, der bruger en computer til arbejde eller sjov, lærer du det grundlæggende i programmering, så du kan automatisere simple opgaver som fx: </p>
+<div class = "book">
+<ul class="itemizedlist">
+<li class="listitem">
+
+<p class = "calibre4"> Flyt og omdøbe tusindvis af filer og sortere dem i mapper </p>
+</Li>
+<li class = "listitem">
+<p class = "calibre4"> Udfyldning af online formularer, ingen indtastning kræves </p>
+</Li>
+<li class = "listitem">
+<p class = "calibre4"> Downloadning af filer eller kopiering af tekst fra et websted, når det opdateres </p>
+</Li>
+<li class = "listitem">
+<p class = "calibre4"> Har din computertekst du tilpassede meddelelser </p>
+</Li>
+<li class = "listitem">
+<p class = "calibre4"> Opdatering eller formatering af Excel-regneark </p>
+</Li>
+<li class = "listitem">
+<p class = "calibre4"> Kontrollerer din e-mail og sender forudgående svar </p>
+</li>
+</ul>
+</div>
+<p class = "calibre4"> Disse opgaver er enkle, men tidskrævende for mennesker, og de er ofte så trivielle eller specifikke, at der ikke er nogen færdig software til at udføre dem. Bevæbnet med lidt programmeringskendskab, kan du få din computer til at udføre disse opgaver for dig. </p></div>
+<div class="book" title="Conventions">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h1 class="title2"><a id="calibre_link-1928" class="firstname"></a>konventioner</h1>
+</div>
+</div>
+</div>
+<p class = "calibre4"> Denne bog er ikke udformet som en referencehåndbog; Det er en guide til begyndere. Kodestilen går nogle gange imod bedste praksis (for eksempel bruger nogle programmer globale variabler), men det er et kompromis for at gøre koden enklere at lære. Denne bog er lavet for folk til at skrive throwaway kode, så der er ikke meget tid på stil og elegance. Sofistikeret programmeringskoncepter-lignende objektorienteret programmering, listeforståelser, <a id="calibre_link-1313" class="calibre1"></a><a id="calibre_link-1405" class="calibre1"></a><a id="calibre_link-1605" class="calibre1"></a> og generatorer er ikke dækket på grund af den kompleksitet, de tilføjer. Veteranprogrammører kan påpege, hvordan koden i denne bog kan ændres for at forbedre effektiviteten, men denne bog er for det meste bekymret for at få programmer til at arbejde med det mindste arbejde. </p>
+</div>
+<div class="book" title="What Is Programming?">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h1 class="title2"><a id="calibre_link-1929" class="firstname"></a>Hvad er Programmering?</h1>
+</div>
+</div>
+</div>
+<p class = "calibre4"> Tv-shows og film viser ofte programmører rasende at skrive kryptiske strømme af 1s og 0s på glødende skærme, men moderne programmering er ikke så mystisk. <span class = "calibre1"><em class = "calibre5"> Programmering </em></span> er simpelthen handlingen med at indtaste instruktioner til den computer, der skal udføres. Disse instruktioner kan knuse nogle tal, ændre tekst, slå op information i filer eller kommunikere med andre computere via internettet. </p>
+<p class="calibre4">Alle programmer bruger grundlæggende instruktioner som byggesten. Her er et par af de mest almindelige, på Dansk:</p>
+<div class="book">
+<ul class="itemizedlist">
+<li class="listitem">
+<p class="calibre4"><span class="calibre1"><strong class="calibre7">“Gør dette; så gør det.”</strong></span></p>
+</li>
+<li class="listitem">
+<p class="calibre4"><span class="calibre1"><strong class="calibre7">“Hvis denne betingelse er sand, udfør denne handling; Ellers, gør den handling.”</strong></span></p>
+</li>
+<li class="listitem">
+<p class="calibre4"><span class="calibre1"><strong class="calibre7">“Gør denne handling så mange gange.”</strong></span></p>
+</li>
+<li class="listitem">
+<p class="calibre4"><span class="calibre1"><strong class="calibre7">“Fortsæt med at gøre det, indtil denne betingelse er sandt.”</strong></span></p>
+</li>
+</ul>
+</div>
+<p class = "calibre4"> Du kan kombinere disse byggesten til også at implementere mere indviklede beslutninger. Her er f.eks. Programmeringsinstruktionerne kaldet <span class = "calibre1"><em class = "calibre5"> kildekode </em></span> til et simpelt program skrevet i Python programmeringssprog. Python-softwaren starter øverst ved at køre hver linje af kode (nogle linjer køres kun <span class = "calibre1"><em class = "calibre5"> hvis </em></span> en bestemt betingelse er sand eller <span class = "calibre1"><em class = "calibre5"> ellers </em></span> Python kører en anden linje), indtil den når bunden. </p>
+<p><a id="calibre_link-1930" class="calibre1"></a>
+395/5000
+</p><pre class = "programlisting"> ❶ passwordFile = open ('SecretPasswordFile.txt')
+❷ secretPassword = passwordFile.read ()
+❸ print ('Indtast dit kodeord.')
+   typedPassword = input ()
+❹ hvis skrevetPassword == SecretPassword:
+❺ print ('Access granted')
+❻ hvis skrevetPassword == '12345':
+❼ print ('Denne adgangskode er en, som en idiot sætter på deres bagage.')
+   andet:
+❽ print ('Adgang nægtet') </pre>
+<p class = "calibre4"> Du ved muligvis ikke noget om programmering, men du kunne nok gøre et rimeligt gæt på, hvad den foregående kode gør ved at læse den. For det første åbnes filen <span class = "calibre1"><em class = "calibre5"> SecretPasswordFile.txt </em></span> ❶, og den hemmelige adgangskode i den læses ❷. Derefter bliver brugeren bedt om at indtaste et kodeord (fra tastaturet) ❸. Disse to adgangskoder sammenlignes ❹, og hvis de er ens, udskrives programmet <span class = "calibre1"><em class = "calibre5"> Adgang tildelt </em></span> til skærmen ❺. Derefter kontrolleres programmet for at se, om adgangskoden er <span class = "calibre1"><em class = "calibre5"> 12345 </em></span> ❻ og antyder, at dette valg måske ikke er bedst for et kodeord ❼. Hvis adgangskoderne ikke er ens, udskrives programmet <span class = "calibre1"><em class = "calibre5"> Adgang nægtet </em></span> til skærmen ❽. </p>
+<div class="book" title="What Is Python?">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h2 class="title3"><a id="calibre_link-1931" class="firstname"></a>Hvad er Python?</h2>
+</div>
+</div>
+</div>
+<p class="calibre4"><a id="calibre_link-434" class="calibre1"></a><a id="calibre_link-966" class="calibre1"></a><a id="calibre_link-1055" class="calibre1"></a><a id="calibre_link-1099" class="calibre1"></a><a id="calibre_link-1186" class="calibre1"></a><a id="calibre_link-1314" class="calibre1"></a><a id="calibre_link-1315" class="calibre1"></a><a id="calibre_link-1406" class="calibre1"></a><a id="calibre_link-1407" class="calibre1"></a><a id="calibre_link-1691" class="calibre1"></a><a id="calibre_link-1841" class="calibre1"></a><span class="calibre1"><em class="calibre5">Python</em></span> henviser til Python programmeringssprog (med syntaksregler for at skrive hvad der betragtes som gyldig Python-kode) og Python-tolk-softwaren, der læser kildekoden (skrevet på Python-sproget) og udfører sine instruktioner. Python-tolken kan downloades fra <span class = "calibre1"><em class = "calibre5"><a class="ulink" href="http://python.org/"> http: // python. org / </a></em></span>, og der er versioner til Linux, OS X og Windows. </p>
+<p class = "calibre4"> Navnet Python kommer fra den surrealistiske britiske komediegruppe Monty Python, ikke fra slangen. Python programmører kaldes kærligt Pythonistas, og både Monty Python og serpentine referencer plejer at være peber Python tutorials og dokumentation. </p>
+</div>
+<div class="book" title="Programmers Don’t Need to Know Much Math">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h2 class="title3"><a id="calibre_link-1932" class="firstname"></a>Programmører behøver ikke at vide meget mathematik</h2>
+</div>
+</div>
+</div>
+<p class = "calibre4"> Den mest almindelige angst jeg hører om at lære at programmere er, at folk tror, ​​at det kræver en masse matematik. Faktisk kræver de fleste programmer ikke matematik ud over grundlæggende aritmetik. Faktisk at være god til programmering er ikke så forskellig fra at være god til at løse Sudoku-puslespil. </p>
+<p class = "calibre4"> For at løse et Sudoku-puslespil skal tallene 1 til 9 udfyldes for hver række, hver søjle og hver 3 × 3 indvendige firkant i det fulde 9 × 9 bord. Du finder en løsning ved at anvende fradrag og logik fra startnumrene. For eksempel er der 5 øverst til venstre i Sudoku-puslespillet vist i <a class = "ulink" href = "https://automatetheboringstuff.com/chapter0/#calibre_link-91" title = "Figur 1. En ny Sudoku puslespil (til venstre) og dens løsning (til højre). Til trods for at du bruger tal, involverer Sudoku ikke meget matematik. "> Figur & nbsp; 1 </a>, det kan ikke vises andre steder i øverste række i venstre kolonne eller i øverste venstre 3 × 3 firkant. Løsning af en række, kolonne eller firkant ad gangen giver flere tal for resten af ​​puslespillet. </p>
+<div class="figure"><a id="calibre_link-91" class="calibre1"></a>
+<div class="book">
+<div class="book"><a id="calibre_link-1933" class="calibre1"></a><img src="./pictures/000037.jpg" alt="A new Sudoku puzzle (left) and its solution (right). Despite using numbers, Sudoku doesn’t involve much math. (Images © Wikimedia Commons)" class="calibre8"></div>
+</div>
+<p class = "title4"> Figur & nbsp; 1. & nbsp; Et nyt Sudoku puslespil (til venstre) og dets løsning (højre). Trods brug af tal involverer Sudoku ikke meget matematik. (Billeder © Wikimedia Commons) </p>
+</Div>
+<p class = "calibre4"> Bare fordi Sudoku involverer tal betyder ikke, at du skal være god til matematik for at finde ud af løsningen. Det samme gælder for programmeringen. Som at løse et Sudoku-puslespil indebærer skriveprogrammer at nedbryde et problem i individuelle, detaljerede trin. På samme måde, når <span class = "calibre1"><em class = "calibre5"> fejlfinding </em></span> programmer (det vil sige at finde og fastsætte fejl), vil du tålmodigt observere, hvad programmet laver og finde årsagen til fejlene. Og ligesom alle færdigheder, jo mere du programmerer, desto bedre bliver du. </p>
+</div>
+<div class="book" title="Programming Is a Creative Activity">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h2 class="title3"><a id="calibre_link-1934" class="firstname"></a>Programmering er en kreativ aktivitet</h2>
+</div>
+</div>
+</div>
+<p class = "calibre4"><a id="calibre_link-1316" class="calibre1"></a> Programmering er en kreativ opgave, som om at bygge et slot ud af LEGO mursten. Du starter med en grundlæggende ide om, hvad du vil have dit slot at se ud og oplagre dine tilgængelige blokke. Så begynder du at bygge. Når du er færdig med at opbygge dit program, kan du temmelig op din kode ligesom du ville dit slot. </p>
+<p class = "calibre4"> Forskellen mellem programmering og andre kreative aktiviteter er, at når du programmerer, har du alle de råvarer, du har brug for i din computer; Du behøver ikke købe ekstra lærred, maling, film, garn, LEGO mursten eller elektroniske komponenter. Når dit program er skrevet, kan det nemt deles online med hele verden. Og selvom du vil lave fejl under programmeringen, er aktiviteten stadig meget sjov. </p>
+</div>
+</div>
+<div class="book" title="About This Book">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h1 class="title2"><a id="calibre_link-121" class="firstname"></a>Om denne Bog</h1>
+</div>
+</div>
+</div>
+<p class = "calibre4"> Den første del af denne bog dækker grundlæggende Python programmeringskoncepter, og den anden del dækker forskellige opgaver, du kan få din computer til at automatisere. Hvert kapitel i anden del har projektprogrammer, som du kan studere. Her er et kort overblik over, hvad du finder i hvert kapitel: </p>
+<p class="calibre4"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter0/#calibre_link-92" title="Part I. Python Programming Basics">1.&nbsp;Del</a></strong></span></p>
+<div class="book">
+<ul class="itemizedlist">
+<li class="listitem">
+<p title="Kapitel 1" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter1" title="Kapitel 1. Python Basics">Kapitel&nbsp;1</a></strong></span></strong></span>.&nbsp;Omfatter udtryk, den mest grundlæggende type Python instruktion, og hvordan man bruger Python interaktive shell software til at eksperimentere med kode.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 2" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter2" title="Kapitel 2. Flow Control">Kapitel&nbsp;2</a></strong></span></strong></span>.&nbsp;Forklarer hvordan man laver programmer bestemme hvilke instruktioner, der skal udføres, så din kode kan intelligent reagere på forskellige forhold.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 3" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter3" title="Kapitel 3. Functions">Kapitel&nbsp;3</a></strong></span></strong></span>.&nbsp;Instruerer dig om, hvordan du definerer dine egne funktioner, så du kan organisere din kode til mere håndterbare klumper.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 4" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter4" title="Kapitel 4. Lists">Kapitel&nbsp;4</a></strong></span></strong></span>.&nbsp;Introducerer listedatatypen og forklarer, hvordan man organiserer data.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 5" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter5" title="Kapitel 5. Dictionaries and Structuring Data">Kapitel&nbsp;5</a></strong></span></strong></span>.&nbsp;Introducerer ordbordsdatatypen og viser dig mere effektive måder at organisere data på.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 6" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter6" title="Kapitel 6. Manipulating Strings">Kapitel&nbsp;6</a></strong></span></strong></span>.&nbsp;Omfatter arbejde med tekstdata (kaldet <span class = "calibre1"><em class = "calibre5"> strenge </em></span> i Python).</p>
+</li>
+</ul>
+</div>
+<p class="calibre4"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter0/#calibre_link-41" title="Part II. Automating Tasks">2.&nbsp;Del</a></strong></span></p>
+<div class="book">
+<ul class="itemizedlist">
+<li class="listitem">
+<p title="Kapitel 7" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter7" title="Kapitel 7. Pattern Matching with Regular Expressions">Kapitel&nbsp;7</a></strong></span></strong></span>.&nbsp;Dækker hvordan Python kan manipulere strenge og søge efter tekstmønstre med regulære udtryk.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 8" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter8" title="Kapitel 8. Reading and Writing Files">Kapitel&nbsp;8</a></strong></span></strong></span>.&nbsp;Forklarer, hvordan dine programmer kan læse indholdet af tekstfiler og gemme oplysninger til filer på harddisken.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 9" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter9" title="Kapitel 9. Organizing Files">Kapitel&nbsp;9</a></strong></span></strong></span>.&nbsp;Viser, hvordan Python kan kopiere, flytte, omdøbe og slette store antal filer meget hurtigere end en menneskelig bruger kan. Det forklarer også komprimering og dekomprimering af filer.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 10" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter10" title="Kapitel 10. Debugging">Kapitel&nbsp;10</a></strong></span></strong></span>.&nbsp;<a id="calibre_link-882" class="calibre1"></a><a id="calibre_link-1408" class="calibre1"></a><a id="calibre_link-1409" class="calibre1"></a><a id="calibre_link-1842" class="calibre1"></a>Viser, hvordan du bruger Pythons forskellige fejlfinding og fejlfinding.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 11" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter11" title="Kapitel 11. Web Scraping">Kapitel&nbsp;11</a></strong></span></strong></span>.&nbsp;Viser, hvordan man skriver programmer, der automatisk kan downloade websider og analysere dem for information. Dette kaldes <span class="calibre1"><em class="calibre5">web scraping</em></span>.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 12" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter12" title="Kapitel 12. Working with Excel Spreadsheets">Kapitel&nbsp;12</a></strong></span></strong></span>.&nbsp;Omfatter programmatisk manipulation af Excel regneark, så du ikke behøver at læse dem. Dette er nyttigt, når antallet af dokumenter, du skal analysere, er i hundredvis eller tusindvis.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 13" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter13" title="Kapitel 13. Working with PDF and word Documents">Kapitel&nbsp;13</a></strong></span></strong></span>.&nbsp;Omfatter programmatisk læsning af Word- og PDF-dokumenter.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 14" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter14" title="Kapitel 14. Working with CSV Files and JSON Data">Kapitel&nbsp;14</a></strong></span></strong></span>.&nbsp;Fortsætter med at forklare, hvordan man manuelt manipulerer dokumenter med CSV- og JSON-filer.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 15" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter15" title="Kapitel 15. Keeping Time, Scheduling Tasks, and Launching Programs">Kapitel&nbsp;15</a></strong></span></strong></span>.&nbsp;Forklarer, hvordan tid og datoer håndteres af Python-programmer og hvordan du planlægger din computer til at udføre opgaver på bestemte tidspunkter. Dette kapitel viser også, hvordan dine Python-programmer kan starte ikke-Python-programmer.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 16" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter16" title="Kapitel 16. Sending Email and Text Messages">Kapitel&nbsp;16</a></strong></span></strong></span>.&nbsp;Forklarer, hvordan man skriver programmer, der kan sende e-mails og sms'er på dine vegne.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 17" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter17" title="Kapitel 17. Manipulating Images">Kapitel&nbsp;17</a></strong></span></strong></span>.&nbsp;Forklarer, hvordan man programmatisk manipulerer billeder som JPEG- eller PNG-filer.</p>
+</li>
+<li class="listitem">
+<p title="Kapitel 18" class="calibre4"><span class="calibre1"><strong class="calibre7"><span class="calibre1"><strong class="calibre7"><a class="ulink" href="https://automatetheboringstuff.com/chapter18" title="Kapitel 18. Controlling the Keyboard and Mouse with GUI Automation">Kapitel&nbsp;18</a></strong></span></strong></span>.&nbsp;Forklarer, hvordan man styrer musen og tastaturet automatisk for at automatisere klik og tastetryk.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="book" title="Downloading and Installing Python">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h1 class="title2"><a id="calibre_link-1935" class="firstname"></a>Download og installere Python</h1>
+</div>
+</div>
+</div>
+<p class = "calibre4"> Du kan downloade Python til Windows, OS X og Ubuntu gratis fra <span class = "calibre1"><em class = "calibre5"><a class = "ulink" href = "http : //python.org/downloads/ "> http://python.org/downloads/ </a></em></span>. Hvis du downloader den nyeste version fra webstedets download side, kan alle programmerne i denne bog arbejde. </p>
+<div class="warning" title="Warning">
+<h3 class="title5"><a id="calibre_link-1936" class="calibre1"></a>Advarsel</h3>
+<p class="calibre4"><span class="calibre1"><em class="calibre5">Sørg for at downloade en version af Python 3 (som f.eks. 3.4.0). Programmerne i denne bog er skrevet til at køre på Python 3 og må muligvis ikke køre korrekt, hvis overhovedet, på Python 2.</em></span></p>
+</div>
+<p class="calibre4"> Du finder Python-installationer til 64-bit og 32-bit computere til hvert operativsystem på download siden, så find ud af, hvilken installatør du har brug for. Hvis du købte din computer i 2007 eller senere, er det højst sandsynligt et 64-bit system. Ellers har du en 32-bit version, men her er hvordan du kan finde ud af det hele:</p>
+<div class="book">
+<ul class="itemizedlist">
+<li class="listitem">
+<p class="calibre4">Vælg <span class = "calibre1"><strong class = "calibre7"> Start </strong></span> ▸ <span class = "calibre1"><strong class = "calibre7"> Kontrolpanel </strong </span> ▸ <span class = "calibre1"><strong class = "calibre7"> System </strong></span> og kontroller, om systemtypen siger 64-bit eller 32-bit.</p>
+</li>
+<li class="listitem">
+<p class="calibre4"><a id="calibre_link-812" class="calibre1"></a><a id="calibre_link-895" class="calibre1"></a><a id="calibre_link-967" class="calibre1"></a><a id="calibre_link-1187" class="calibre1"></a><a id="calibre_link-1410" class="calibre1"></a><a id="calibre_link-1411" class="calibre1"></a><a id="calibre_link-1757" class="calibre1"></a><a id="calibre_link-1843" class="calibre1"></a>På OS X skal du gå til Apple-menuen, vælg <span class = "calibre1"><strong class = "calibre7"> Om denne Mac </strong></span> ▸ <span class = "calibre1"><strong class = "calibre7"> Mere info </strong></span> ▸ <span class = "calibre1"><strong class = "calibre7"> Systemrapport </strong></span><strong class = "calibre7"> Hardware </strong></span>, og kig derefter på feltet Processornavn. Hvis det hedder Intel Core Solo eller Intel Core Duo, har du en 32-bit maskine. Hvis det siger noget andet (herunder Intel Core 2 Duo), har du en 64-bit maskine.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">På Ubuntu Linux skal du åbne en Terminal og køre kommandoen <span class = "calibre1"><strong class = "calibre7"><code class = "bogstavelig"> uname -m </code></strong></span> . Et svar på <code class = "literal1"> i686 </code> betyder 32-bit, og <code class = "literal1"> x86_64 </code> betyder 64-bit.</p>
+</li>
+</ul>
+</div>
+<p class="calibre4">På Windows skal du downloade Python-installationsprogrammet (filnavnet slutter med <span class = "calibre1"><em class = "calibre5"> .msi </em></span>) og dobbeltklik på det. Følg instruktionerne, som installatøren viser på skærmen for at installere Python, som angivet her:</p>
+<div class="book">
+<ol class="orderedlist">
+<li class="listitem">
+<p class="calibre4">Vælg <span class="calibre1"><strong class="calibre7">Installer for alle brugere </strong></span> og klik derefter på <span class = "calibre1"><strong class = "calibre7"> Næste</strong></span>.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Installer til mappen <span class = "calibre1"><em class = "calibre5"> C: \ Python34 </em></span> ved at klikke på <span class = "calibre1"><strong class = "calibre7"> Næste</strong></span>.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Klik på <span class = "calibre1"><strong class = "calibre7"> Næste </strong></span> igen for at springe over sektionen Tilpas Python.</p>
+</li>
+</ol>
+</div>
+<p class="calibre4">På Mac OS X skal du downloade filen <span class = "calibre1"><em class = "calibre5"> .dmg </em></span>, der passer til din version af OS X og dobbeltklikke på den. Følg instruktionerne, som installatøren viser på skærmen for at installere Python, som angivet her:</p>
+<div class="book">
+<ol class="orderedlist">
+<li class="listitem">
+<p class="calibre4">Når DMG-pakken åbnes i et nyt vindue, skal du dobbeltklikke på filen <span class = "calibre1"><em class = "calibre5"> Python.mpkg </em></span>. Du skal muligvis indtaste administratoradgangskoden.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Klik på <span class = "calibre1"><strong class = "calibre7"> Fortsæt </strong></span> gennem velkomstdelen og klik på <span class = "calibre1"><strong class = "calibre7"> Enig </strong></span> for at acceptere licensen.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Vælg <span class = "calibre1"><strong class = "calibre7"> HD Macintosh </strong></span> (eller hvilket navn harddisken har) og klik på <span class = "calibre1"><strong class = "calibre7"> Installer</strong></span>.</p>
+</li>
+</ol>
+</div>
+<p class="calibre4">Hvis du kører Ubuntu, kan du installere Python fra Terminal ved at følge disse trin:</p>
+<div class="book">
+<ol class="orderedlist">
+<li class="listitem">
+<p class="calibre4">Åbn vinduet Terminal.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Indtast <span class = "caliber 1"><strong class = "kaliber 7"><code class = "literal"> sudo apt-get install python3</code></strong></span>.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Indtast <span class = "caliber 1"><strong class = "kaliber 7"><code class = "literal"> sudo apt-get install idle3</code></strong></span>.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Indtast <span class = "calibre1"><strong class = "calibre7"><code class = "bogstavelig"> sudo apt-get install python3-pip</code></strong></span>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="book" title="Starting IDLE">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h1 class="title2"><a id="calibre_link-1937" class="firstname"></a>Start IDLE</h1>
+</div>
+</div>
+</div>
+<p class="calibre4">Selvom <span class = "calibre1"><em class = "calibre5"> Python Overs&aelig;tteren </em></span> er den software, der kører dine Python-programmer, er <span class = "calibre1"><em class = "calibre5"> interaktivt udviklingsmiljø (IDLE) </em></span> software er, hvor du vil indtaste dine programmer, ligesom en tekstbehandler. Lad os starte IDLE nu.</p>
+<div class="book">
+<ul class="itemizedlist">
+<li class="listitem">
+<p class="calibre4">I Windows 7 eller nyere skal du klikke på Start-ikonet i nederste venstre hjørne af skærmen. Indtast <span class = "calibre1"><strong class = "calibre7"><code class = "bogstavelig"> IDLE </code></strong></span> i søgefeltet, og vælg <span class = "calibre1"><strong class = "calibre7"> IDLE (Python GUI)</strong></span>.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Klik på knappen <span class = "calibre1"><strong class = "calibre7"> Start </strong></span> i Windows XP, og vælg derefter <span class = "calibre1"><strong class = "calibre7" > Programmer </strong></span> ▸ <span class = "calibre1"><strong class = "calibre7"> Python 3.4 </strong></span> ▸ <span class = "calibre1"><strong class = "calibre7"> IDLE (Python GUI)</strong></span>.</p>
+</li>
+<li class="listitem">
+<p class="calibre4"><a id="calibre_link-564" class="calibre1"></a><a id="calibre_link-798" class="calibre1"></a><a id="calibre_link-813" class="calibre1"></a><a id="calibre_link-968" class="calibre1"></a><a id="calibre_link-1188" class="calibre1"></a><a id="calibre_link-1412" class="calibre1"></a><a id="calibre_link-1413" class="calibre1"></a>På Mac OS X skal du åbne Finder-vinduet, klikke på <span class = "calibre1"><strong class = "calibre7"> Programmer </strong></span>, klik på <span class = "calibre1"><strong class = "calibre7"> Python 3.4 </strong></span>, og klik derefter på IDLE-ikonet.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">På Ubuntu skal du vælge <span class = "calibre1"><strong class = "calibre7"> Applikationer </strong></span> ▸ <span class = "calibre1"><strong class = "calibre7"> Tilbehør </strong ></span> ▸ <span class = "calibre1"><strong class = "calibre7"> Terminal </strong></span> og indtast derefter <span class = "calibre1"><strong class = "calibre7"><code class = "literal"> idle3 </code></strong></span>. (Du kan også klikke på <span class = "calibre1"><strong class = "calibre7"> Programmer </strong></span> øverst på skærmen, vælg <span class = "calibre1">< strong class = "calibre7"> Programmering </strong></span>, og klik derefter på <span class = "calibre1"><strong class = "calibre7"> IDLE 3</strong></span>.)</p>
+</li>
+</ul>
+</div>
+<div class="book" title="The Interactive Shell">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h2 class="title3"><a id="calibre_link-1938" class="firstname"></a>Den Interaktive Kommandolinje</h2>
+</div>
+</div>
+</div>
+<p class="calibre4">Uanset hvilket operativsystem du kører, skal IDLE-vinduet, der først vises, være stort set blankt bortset fra tekst, der ser sådan ud: </p>
+<p><a id="calibre_link-1939" class="calibre1"></a>
+</p><pre class = "programliste"> Python 3.4.0 (v3.4.0: 04f714765c13, 16. marts 2014, 19:25:23) [MSC v.1600 64
+bit (AMD64)] på win32Type "copyright", "credits" eller "license ()" for mere
+Information.
+&gt;&gt;&gt;</pre>
+<p class="calibre4">Dette vindue hedder <span class = "calibre1"><em class = "calibre5"> interaktive skal </em></span>. En shell er et program, der lader dig skrive instruktioner i computeren, ligesom terminalen eller kommandoprompten på henholdsvis OS X og Windows. Pythons interaktive shell giver dig mulighed for at indtaste instruktioner til Python-tolk-softwaren til at køre. Computeren læser de instruktioner, du indtaster, og kører dem med det samme. </P>
+<p class = "calibre4"> Skriv eksempelvis følgende i den interaktive skal ved siden af ​​<code class = "literal1">&gt;&gt;&gt; </code> prompt: </p>
+<p><a id="calibre_link-1940" class="calibre1"></a>
+</p><pre class = "programlisting">&gt;&gt;&gt; <span class = "calibre1"><strong class = "bogstavelig"> print ('Hej verden!') </strong></span></pre>
+<p class = "calibre4"> Når du skriver den linje og trykker på <span class = "smaller"> ENTER </span>, skal den interaktive skal vise dette som svar: </p>
+<p><a id="calibre_link-1941" class="calibre1"></a>
+</p><pre class = "programlisting">&gt;&gt;&gt; <span class = "calibre1"><strong class = "bogstaveligt"> print ('Hej verden!') </strong></span>
+Hej Verden!</pre>
+</div>
+</div>
+<div class="book" title="How to Find Help">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h1 class="title2"><a id="calibre_link-1942" class="firstname"></a>Hvordan man Hinder Hjælp</h1>
+</div>
+</div>
+</div>
+<p class="calibre4">Løsning af programmeringsproblemer på egen hånd er nemmere end du måske tror. Hvis du ikke er overbevist, så lad os medføre en fejl med det formål: Indtast <span class = "calibre1"> <strong class = "calibre7"> <code class = "bogstavelig"> "42" + 3 </code> </strong> </span> i den interaktive skal. Du behøver ikke at vide, hvad denne instruktion betyder lige nu, men resultatet skal se sådan ud:</p>
+<p><a id="calibre_link-1943" class="calibre1"></a>
+</p><pre class="programlisting"> &gt;&gt;&gt; <span class="calibre1"><strong class="literal">'42' + 3</strong></span>
+❶ Traceback (most recent call last):
+    File "&lt;pyshell#0&gt;", line 1, in &lt;module&gt;
+      '42' + 3
+❷ TypeError: Can't convert 'int' object to str implicitly
+ &gt;&gt;&gt;</pre>
+<p class="calibre4"><a id="calibre_link-799" class="calibre1"></a><a id="calibre_link-1444" class="calibre1"></a><a id="calibre_link-1611" class="calibre1"></a>Fejlmeddelelsen ❷ dukkede op her, fordi Python ikke kunne forstå din instruktion. Sporingsdelen ❶ af fejlmeddelelsen viser den specifikke instruktion og linjenummer, som Python havde problemer med. Hvis du ikke er sikker på, hvad du skal lave af en bestemt fejlmeddelelse, skal du søge online for den nøjagtige fejlmeddelelse. Indtast <span class = "calibre1"> <strong class = "calibre7"> "TypeError: Kan ikke omdanne 'int' objekt til str implicit </strong> </span> (herunder citaterne) til din yndlings søgemaskine , og du bør se tonsvis af links, der forklarer, hvad fejlmeddelelsen betyder og hvad der forårsager det, som vist i <a class="ulink" href="https://automatetheboringstuff.com/chapter0/#calibre_link-98" title="Figure 2. The Google results for an error message can be very helpful.">Figure&nbsp;2</a>.</p>
+<div class="figure"><a id="calibre_link-98" class="calibre1"></a>
+<div class="book">
+<div class="book"><a id="calibre_link-1944" class="calibre1"></a><img src="./pictures/000042.jpg" alt="The Google results for an error message can be very helpful." class="calibre8"></div>
+</div>
+<p class="title4">Figure&nbsp;2.&nbsp;Googles resultater for en fejlmeddelelse kan være meget nyttige.</p>
+</div>
+<p class="calibre4">Du finder ofte, at en anden har det samme spørgsmål som dig, og at en anden nyttig person allerede har besvaret det. Ingen person kan vide alt om programmering, så en dagligdags del af enhver softwareudvikler job ser på svar på tekniske spørgsmål.</p>
+</div>
+<div class="book" title="Asking Smart Programming Questions">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h1 class="title2"><a id="calibre_link-1945" class="firstname"></a>Spørg Smart Programmeringsspørgsmål</h1>
+</div>
+</div>
+</div>
+<p class="calibre4">Hvis du ikke kan finde svaret ved at søge online, kan du prøve at spørge folk på et webforum som Stack Overlow (<span class = "calibre1"> <em class = "calibre5"> <a class = "ulink" href = " http://stackoverflow.com/">http://stackoverflow.com/ </a></em></span>) eller "learn programming" subreddit på <span class = "calibre1"> <em class = "calibre5"> <a class="ulink" href="http://reddit.com/r/learnprogramming/"> http://reddit.com/r/learnprogramming/ </a></em></span>. Men husk, at der er klare måder at stille programmeringsspørgsmål på, som hjælper andre med at hjælpe dig. Sørg for at læse de Ofte stillede spørgsmål sektioner disse hjemmesider har om den rigtige måde at sende spørgsmål.</p>
+<p class="calibre4">Når du spørger programmeringsspørgsmål, skal du huske at gøre følgende:</p>
+<div class="book">
+<ul class="itemizedlist">
+<li class="listitem">
+<p class="calibre4">Forklar hvad du forsøger at gøre, ikke bare hvad du gjorde. Dette lader din hjælper vide, hvis du er på det forkerte spor.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Angiv det punkt, hvor fejlen opstår. Findes det i starten af programmet eller kun efter at du har lavet en bestemt handling?</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Kopier og indsæt fejlmeddelelsen <span class = "calibre1"> <em class = "calibre5"> hele</em></span> og din kode til <span class="calibre1"><em class="calibre5"><a class="ulink" href="http://pastebin.com/">http://pastebin.com/</a></em></span> or <span class="calibre1"><em class="calibre5"><a class="ulink" href="http://gist.github.com/">http://gist.github.com/</a></em></span>.</p>
+<p class="calibre4">Disse websteder gør det nemt at dele store mængder kode med mennesker over nettet uden risiko for at miste tekstformatering. Du kan derefter sætte webadressen til den postede kode i din email eller forum post. For eksempel, her er nogle stykker kode, jeg har indsendt: <span class="calibre1"><em class="calibre5"><a class="ulink" href="http://pastebin.com/SzP2DbFx/">http://pastebin.com/SzP2DbFx/</a></em></span> and <span class="calibre1"><em class="calibre5"><a class="ulink" href="https://gist.github.com/asweigart/6912168/">https://gist.github.com/asweigart/6912168/</a></em></span>.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Forklar, hvad du allerede har forsøgt at gøre for at løse dit problem. Dette fortæller folk, du allerede har lagt i noget arbejde for at finde ud af ting på egen hånd.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Angiv den version af Python du bruger. (Der er nogle vigtige forskelle mellem version 2 Python tolke og version 3 Python tolke.) Også, hvilket operativsystem og version du kører.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Hvis fejlen opstod, efter at du har foretaget en ændring af din kode, skal du forklare præcis, hvad du har ændret.</p>
+</li>
+<li class="listitem">
+<p class="calibre4">Sig, om du kan gengive fejlen hver gang du kører programmet, eller om det kun sker, når du har udført visse handlinger. Forklar, hvad disse handlinger er, hvis det er tilfældet.</p>
+</li>
+</ul>
+</div>
+<p class="calibre4">Følg altid god online etikette også. For eksempel skal du ikke sende dine spørgsmål i alle hætter eller gøre urimelige krav fra de mennesker, der forsøger at hjælpe dig.</p>
+</div>
+<div class="book" title="Summary">
+<div class="titlepage">
+<div class="book">
+<div class="book">
+<h1 class="title2"><a id="calibre_link-1946" class="firstname"></a>Summary</h1>
+</div>
+</div>
+</div>
+<p class="calibre4"><a id="calibre_link-1218" class="calibre1"></a>For de fleste er deres computer kun et apparat i stedet for et værktøj. Men ved at lære at programmere får du adgang til en af de mest magtfulde værktøjer i den moderne verden, og du vil have det sjovt undervejs. Programmering er ikke hjernekirurgi - det er fint for amatører at eksperimentere og lave fejl.</P>
+<p class = "calibre4"> Jeg elsker at hjælpe folk med at opdage Python. Jeg skriver programmeringstutorials på min blog på <span class="calibre1"><em class="calibre5"><a class="ulink" href="http://inventwithpython.com/blog/">http://inventwithpython.com/blog/</a></em></span>, og du kan kontakte mig med spørgsmål på <span class="calibre1"><em class="calibre5"><span class="calibre1"><a class="ulink" href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span></em></span>.</p>
+<p class="calibre4">Denne bog vil starte dig fra nul programmeringskendskab, men du kan have spørgsmål uden for sit anvendelsesområde. Husk at stille effektive spørgsmål og vide, hvordan man finder svar, er uvurderlige værktøjer på din programmeringsrejse.</p>
+<p class = "calibre4"> Lad os begynde!</p>
+</div>
+</div>
+</div>
+<p></p><center><a href="index.html"><img src="./pictures/toc.png"></a><a href="chapter1.html"><img src="./pictures/next.png"></a><br><p></p>
+</center><p></p><p></p></article></div><p></p><p></p><p></p><p></p>
+
+
+				
+
+
+	<div><center>Støtt forfatteren ved at købe print / ebook-pakken fra <a href="https://www.nostarch.com/automatestuff"> No Starch Press </a> eller separat på <a href="http://www.amazon.com/gp/product/1593275994/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1593275994&amp;linkCode=as2&amp;tag=playwithpyth-20&amp;linkId=HDM7V3T6RHC5VVN4">Amazon</a>.</center></div>
+
+	<div><center><a href="http://www.amazon.com/gp/product/1593275994/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1593275994&amp;linkCode=as2&amp;tag=playwithpyth-20&amp;linkId=HDM7V3T6RHC5VVN4"><img src="./pictures/automate_small_cover.png" alt="Automate the Boring Stuff book cover thumbnail"></a></center></div>
+
+	<div><center>Læs forfatterens andre Creative Commons licenserede Python bøger.</center></div>
+
+	<div><center>
+		<a href="https://turtleappstore.com/book"><img src="./pictures/cover_codingwithminecraft_thumb.png" alt="Coding with Minecraft book cover thumbnail" style="width: 150px"></a>
+
+        <a href="https://inventwithpython.com/cracking/"><img src="./pictures/cover_crackingcodes_thumb.png" alt="Cracking Codes with Python book cover thumbnail" style="width: 150px"></a>
+
+        <a href="https://inventwithpython.com/invent4thed"><img src="./pictures/cover_invent4th_thumb.png" alt="Invent with Python book cover thumbnail" style="width: 150px"></a>
+
+        <a href="https://inventwithscratch.com/book/"><img src="./pictures/cover_scratchprogrammingplayground_thumb.jpg" alt="Scratch Programming Playground book cover thumbnail" style="width: 150px"></a>
+
+		<a href="https://inventwithpython.com/pygame/"><img src="./pictures/cover_makinggames_thumb.png" alt="Making Games with Python and Pygame book cover thumbnail" style="width: 150px"></a>
+
+		</center>
+	</div>
+
+  
+
+
+</body></html>
